@@ -1,1 +1,1 @@
-A script that changes the working directory to the user's home directory
+Shell scripting is fun
