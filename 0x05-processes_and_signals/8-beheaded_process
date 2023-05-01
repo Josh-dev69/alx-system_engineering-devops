@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# A script that kills the process 7-highlander 
+
+# finding the process id(PID of '7-hghlander'
+pid=$(pgrep -f './7-highlander')
+
+# Stop the process with the given id
+kill -s SIGKILL "$pid"
