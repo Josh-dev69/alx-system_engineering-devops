@@ -6,12 +6,10 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  # 
 hours=0
 while [ $hours -lt 12 ]; do
-	echo -n "Hour: $hours"
-	echo ""
+	echo "Hour: $hours"
 	minutes=1
 	while [ $minutes -lt 60 ]; do
-		echo -n "$minutes"
-		echo ""
+		echo "$minutes"
 		minutes=$((minutes+1))
 	done
 	hours=$((hours+1))
