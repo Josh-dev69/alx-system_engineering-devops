@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# A Bash script that displays:
+# The content of the current directory In a list format 
+# Where only the part of the name after the first dash is displayed
+# Do not display hidden files
+
+for file in *; do
+	if [ -f "$file" ] && [[ "$file" != .* ]]; then
+		filename=$(echo "$file" | cut -d "-" -f 2-)
+		echo "$filename"
+	fi 
+done
