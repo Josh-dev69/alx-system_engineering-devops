@@ -4,4 +4,4 @@
 # of processes whose name contain the word bash			#
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-pgrep -f bash | xargs ps -o pid,cmd
+pgrep -l "bash"
