@@ -2,7 +2,7 @@
 # A script that stops 4-to_infinity_and_beyond process.
 
 # Find the process ID (PID) of 4-to_infinity_and_beyond
-PID=$(ps -ef | grep "4-to_infinity_and_beyond" | grep -v grep | awk '{print $2}')
+PID=$(pgrep -a "bash" | grep "4-to_infinity" | cut -d' ' -f1)
 
 # Stop the process with the given PID
 kill $PID
