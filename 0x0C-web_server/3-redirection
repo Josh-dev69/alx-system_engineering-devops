@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Configure your Nginx server for redirection.
+
+# Configure Nginx for redirection
+sudo sed -i '/location \/ {/a \\tlocation /redirect_me {\\n\t\treturn 301 https://www.example.com/new-page;\\n\t}\\n' /etc/nginx/sites-available/default
+
+# Restart Nginx to apply changes
+sudo service nginx restart
