@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
-# Configure your Nginx server for redirection.
+# Configure your Nginx server for redirection
 
-# Configure Nginx for redirection
-sudo sed -i '/location \/ {/a \\tlocation /redirect_me {\\n\t\treturn 301 https://www.example.com/new-page;\\n\t}\\n' /etc/nginx/sites-available/default
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo service nginx start
+echo 'Hello World!' | sudo tee /var/www/html/index.html
+sudo sed -i '24i\	rewrite ^/redirect_me https://web.facebook.com/?_rdc=1&_rdr;' /etc/nginx/sites-available/default
 
-# Restart Nginx to apply changes
+sudo nginx -t
 sudo service nginx restart
