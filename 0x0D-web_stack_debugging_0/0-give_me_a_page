@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Fix Apache issue in the Docker container
-docker exec -it [CONTAINER_ID] /bin/bash
+docker exec -it a534b5339fa7 /bin/bash
 service apache2 start
 exit
-
