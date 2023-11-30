@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # Configure your Nginx server for redirection
 
-sudo apt-get -y update
-sudo apt-get -y install nginx
-sudo service nginx start
-echo 'Hello World!' | sudo tee /var/www/html/index.html
-sudo sed -i '24i\	rewrite ^/redirect_me https://web.facebook.com/?_rdc=1&_rdr;' /etc/nginx/sites-available/default
+apt-get -y update
+apt-get -y install nginx
+service nginx start
 
-sudo nginx -t
-sudo service nginx restart
+echo 'Hello World!' | tee /var/www/html/index.html
+sed -i '24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+
+nginx -t
+service nginx restart
