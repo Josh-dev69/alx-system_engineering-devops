@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# listening on port 80 of all the server’s active IPv4 IPs 
+
+# Check if Nginx is installed
+if ! command -v nginx &> /dev/null; then
+    apt-get update
+    apt-get -y install nginx
+fi
+
+# Check if Nginx is listening on port 80
+if ! (netstat -tuln | grep -q ":80 "); then
+    # If not, start Nginx and ensure it listens on port 80
+    service nginx start
+    sed -i 's/80 default_server;/80;/g' /etc/nginx/sites-available/default
+    service nginx restart
+fi
