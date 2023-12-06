@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Install and configure HAproxy on your lb-01 server.
+
+# Replace 'your_student_id' with your actual student ID
+STUDENT_ID=219004
+
+# Update the package repository
+sudo apt update
+
+# Install HAProxy
+sudo apt install -y haproxy
+
+# HAProxy Configuration
+HA_PROXY_CONFIG="/etc/haproxy/haproxy.cfg"
+
+# Use sed to replace existing configuration or append if not present
+sed -i -e '/^global/,/^backend http_back$/c\
+global\n    log /dev/log local0\n    log /dev/log local1 notice\n    chroot /var/lib/haproxy\n    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners\n    stats timeout 30s\n    user haproxy\n    group haproxy\n    daemon\n\ndefaults\n    log global\n    mode http\n    option httplog\n    option dontlognull\n    timeout connect 5000\n    timeout client 50000\n    timeout server 50000\n\nfrontend http_front\n    bind *:80\n    stats uri /haproxy?stats\n    default_backend http_back\n\nbackend http_back\n    balance roundrobin\n    server server1 [STUDENT_ID]-web-01:80 check\n    server server2 [STUDENT_ID]-web-02:80 check\
+' "$HA_PROXY_CONFIG"
+
+# Restart HAProxy
+sudo service haproxy restart
+
+# Ensure HAProxy starts on boot
+sudo systemctl enable haproxy
+
+# Set the hostname for [STUDENT_ID]-web-01
+sudo hostnamectl set-hostname "$STUDENT_ID-web-01"
+sudo reboot
+
+# Set the hostname for [STUDENT_ID]-web-02
+sudo hostnamectl set-hostname "$STUDENT_ID-web-02"
+sudo reboot
