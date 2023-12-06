@@ -20,14 +20,3 @@ global\n    log /dev/log local0\n    log /dev/log local1 notice\n    chroot /var
 
 # Restart HAProxy
 sudo service haproxy restart
-
-# Ensure HAProxy starts on boot
-sudo systemctl enable haproxy
-
-# Set the hostname for [STUDENT_ID]-web-01
-sudo hostnamectl set-hostname "$STUDENT_ID-web-01"
-sudo reboot
-
-# Set the hostname for [STUDENT_ID]-web-02
-sudo hostnamectl set-hostname "$STUDENT_ID-web-02"
-sudo reboot
