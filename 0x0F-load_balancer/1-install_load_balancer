@@ -15,7 +15,7 @@ HA_PROXY_CONFIG="/etc/haproxy/haproxy.cfg"
 
 # Use sed to replace existing configuration or append if not present
 sed -i -e '/^global/,/^backend http_back$/c\
-global\n    log /dev/log local0\n    log /dev/log local1 notice\n    chroot /var/lib/haproxy\n    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners\n    stats timeout 30s\n    user haproxy\n    group haproxy\n    daemon\n\ndefaults\n    log global\n    mode http\n    option httplog\n    option dontlognull\n    timeout connect 5000\n    timeout client 50000\n    timeout server 50000\n\nfrontend http_front\n    bind *:80\n    stats uri /haproxy?stats\n    default_backend http_back\n\nbackend http_back\n    balance roundrobin\n    server server1 [STUDENT_ID]-web-01:80 check\n    server server2 [STUDENT_ID]-web-02:80 check\
+global\n    log /dev/log local0\n    log /dev/log local1 notice\n    chroot /var/lib/haproxy\n    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners\n    stats timeout 30s\n    user haproxy\n    group haproxy\n    daemon\n\ndefaults\n    log global\n    mode http\n    option httplog\n    option dontlognull\n    timeout connect 5000\n    timeout client 50000\n    timeout server 50000\n\nfrontend http_front\n    bind *:80\n    stats uri /haproxy?stats\n    default_backend http_back\n\nbackend http_back\n    balance roundrobin\n    server server1 [STUDENT_ID]-web-01 52.91.133.84:80 check\n    server server2 [STUDENT_ID]-web-02 52.3.244.11:80 check\
 ' "$HA_PROXY_CONFIG"
 
 # Restart HAProxy
