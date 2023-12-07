@@ -1,17 +1,14 @@
 #!/usr/bin/env bash
 # Configuration of load balancer on the server
 
-# Replace 'your_student_id' with your actual student ID
-STUDENT_ID="your_student_id"
-
 sudo apt -y update
 sudo apt install -y haproxy
 
 CONFIG_FILE="/etc/haproxy/haproxy.cfg"
 
 # Use sed to replace existing configuration
-sudo sed -i -e '/^listen load_balancer/,/^server 329369-web-02 54.173.97.239:80 check$/c\
-listen load_balancer\n    bind *:80\n    mode http\n    balance roundrobin\n    option httpclose\n    option forwardfor\n    server server1 '"$STUDENT_ID"'-web-01 52.91.133.84:80 check\n    server server2 '"$STUDENT_ID"'-web-02 52.3.244.11:80 check\
+sudo sed -i -e '/^listen load_balancer/,/^server 219004-web-02 52.3.244.11:80 check$/c\
+listen load_balancer\n    bind *:80\n    mode http\n    balance roundrobin\n    option httpclose\n    option forwardfor\n    server server1 219004-web-01 52.91.133.84:80 check\n    server server2 219004-web-02 52.3.244.11:80 check\
 ' "$CONFIG_FILE"
 
 # Restart HAProxy
