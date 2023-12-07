@@ -5,17 +5,38 @@
 sudo apt -y update
 sudo apt install -y haproxy
 
-# Define configuration file path
-CONFIG_FILE="/etc/haproxy/haproxy.cfg"
+# Configure HAProxy
+sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<EOL
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
 
-# Use sed to replace existing configuration
-sudo sed -i -e '/^frontend localhost/,/^$/c\
-frontend localhost\n    bind *:80\n    mode http\n    default_backend servers\
-' "$CONFIG_FILE"
+defaults
+    log global
+    mode http
+    option httplog
+    option dontlognull
+    timeout connect 5000
+    timeout client 50000
+    timeout server 50000
 
-sudo sed -i -e '/^backend servers/,/^$/c\
-backend servers\n    mode http\n    balance roundrobin\n    option httpclose\n    option forwardfor\n    server server1 219004-web-01 52.91.133.84:80 check\n    server server2 219004-web-02 52.3.244.11:80 check\
-' "$CONFIG_FILE"
+frontend web
+    bind *:80
+    mode http
+    default_backend servers
+
+backend servers
+    mode http
+    balance roundrobin
+    server 219004-web-01 52.91.133.84:80 check
+    server 219004-web-02 52.3.244.11:80 check
+EOL
 
 # Restart HAProxy
 sudo service haproxy restart
