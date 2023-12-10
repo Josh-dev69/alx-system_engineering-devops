@@ -34,8 +34,8 @@ frontend web
 backend servers
     mode http
     balance roundrobin
-    server 219004-web-01 52.91.133.84:80 check
-    server 219004-web-02 52.3.244.11:80 check
+    server 219004-web-01 18.210.20.16:80 check
+    server 219004-web-02 100.26.217.156:80 check
 EOL
 
 # Restart HAProxy
