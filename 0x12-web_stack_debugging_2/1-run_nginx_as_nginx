@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Configuring my Nginx Server
+
+# Create the 'nginx' user if it doesn't exist
+if ! id -u nginx &>/dev/null; then
+    useradd -r -s /usr/sbin/nologin nginx
+fi
+
+# Change the user to 'nginx' in the Nginx configuration file
+sed -i "s/user\s*[^;]*;/user nginx;/g" /etc/nginx/nginx.conf
+
+# Restart Nginx service
+service nginx restart
+
+# Check if Nginx is running as the 'nginx' user
+ps auxff | grep '[n]ginx'
+
+# Check if Nginx is listening on port 8080
+nc -z 0 8080 ; echo $?
