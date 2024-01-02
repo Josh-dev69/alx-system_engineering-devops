@@ -5,8 +5,8 @@ This script retrieves information about a user and their completed
 tasks from the JSONPlaceholder API.
 """
 
-import sys
 import requests
+import sys
 
 
 def get_user_data(user_id):
