@@ -1,56 +1,45 @@
-#!/usr/bin/python3
+!/usr/bin/python3
 
 """
-
-This script retrieves information about a user and their
-completed tasks from the JSONPlaceholder API.
-
-Usage:
-    python3 0-gather_data_from_an_API.py <user_id>
+This script retrieves information about a user and their completed
+tasks from the JSONPlaceholder API.
 """
 
-from requests import get
-from sys import argv
+import sys
+import requests
 
 
-def get_employee_data(employee_id):
+def get_user_data(user_id):
     """
-        Fetches employee data and todo list from the given REST API
+        Fetches user data from the JSONPlaceholder API.
     """
-    url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
-    return get(url).json()
+    user_url = f"https://jsonplaceholder.typicode.com/users/{user_id}"
+    return requests.get(user_url).json()
 
 
-def get_todo_list(employee_id):
+def get_user_todos(user_id):
     """
-        Fetches the todo list of the employee from the given REST API.
+        Fetches user's to-do list from the JSONPlaceholder API.
     """
-    url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
-    return get(url).json()
+    todo_url = f"https://jsonplaceholder.typicode.com/todos?userId={user_id}"
+    return requests.get(todo_url).json()
 
 
-def display_todo_progress(employee_data, todo_list):
-    """
-        Displays the employee TODO list progress in the specified format.
-    """
-    employee_name = employee_data.get("name")
-    completed_todos = []
-    for todo in todo_list:
-        if todo.get('completed'):
-            completed_todos.append(todo)
-    total = len(todo_list)
+def main():
+    """Main function to execute the script."""
+    user_data = get_user_data(user_id)
+    username = user_data.get("name")
+
+    user_todos = get_user_todos(user_id)
+    total = len(user_todos)
+
+    completed_todos = [todo for todo in user_todos if todo.get('completed')]
     completed = len(completed_todos)
 
-    print(f"Employee {employee_name} is done with tasks({completed}/{total}):")
-
+    print(f"Employee {username} is done with tasks ({completed}/{total}):")
     for todo in completed_todos:
-        print(f"     {todo['title']}")
+        print(f"\t{todo['title']}")
 
 
 if __name__ == "__main__":
-    employee_id = int(argv[1])
-
-    employee_data = get_employee_data(employee_id)
-    todo_list = get_todo_list(employee_id)
-
-    display_todo_progress(employee_data, todo_list)
+    main()
