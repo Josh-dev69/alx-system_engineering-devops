@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" A script that returns an employee's todo list """
+# A script that returns an employee's todo list 
 
 import sys
 import requests as req
