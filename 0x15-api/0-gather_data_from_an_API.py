@@ -27,6 +27,7 @@ def get_user_todos(user_id):
 
 def main():
     """Main function to execute the script."""
+    user_id = sys.argv[1]
     user_data = get_user_data(user_id)
     username = user_data.get("name")
 
