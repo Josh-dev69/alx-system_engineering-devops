@@ -1,8 +1,9 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ A script that returns an employee's todo list """
 
 import sys
 import requests as req
+import csv
 
 # Retrieve user ID from command-line arguments
 user_id = sys.argv[1]
@@ -26,9 +27,15 @@ for todo in user_todos:
         completed_todos.append(todo)
 completed = len(completed_todos)
 
-# Print task details
-print("Employee {} is done with tasks({}/{})"
-        .format(username, completed, total))
-for todo in completed_todos:
-    print("     {}".format(todo['title']))
+# Define CSV file name
+csv_filename = f"{user_id}.csv"
 
+# Write data to CSV file
+with open(csv_filename, mode='w', newline='') as csv_file:
+    csv_writer = csv.writer(csv_file)
+
+    for todo in user_todos:
+        # Write each todo as a row in the CSV file
+        csv_writer.writerow([user_id,username,str(todo['completed']),todo['title']])
+
+print(f"CSV data exported to {csv_filename}")
