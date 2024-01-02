@@ -1,8 +1,17 @@
-#!/usr/bin/python3
-# A script that returns an employee's todo list 
+#!/usr/bin/python3 
+"""
+Employee Task Summary Script
 
-import sys
+This script retrieves information about a user and their completed tasks from the JSONPlaceholder API.
+It takes a user ID as a command-line argument, fetches the user's details, and prints a summary of
+completed tasks along with their titles.
+
+Usage:
+    python3 0-gather_data_from_an_API.py <user_id>
+"""
+
 import requests as req
+import sys
 
 user_id = sys.argv[1]
 
