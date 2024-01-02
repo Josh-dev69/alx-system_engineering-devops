@@ -9,42 +9,48 @@ Usage:
     python3 0-gather_data_from_an_API.py <user_id>
 """
 
-import requests
-import sys
+from requests import get
+from sys import argv
 
 
-def get_user_data(user_id):
-    """Fetches user data from the JSONPlaceholder API."""
-    user_url = f"https://jsonplaceholder.typicode.com/users/{user_id}"
-    return requests.get(user_url).json()
+def get_employee_data(employee_id):
+    """
+        Fetches employee data and todo list from the given REST API
+    """
+    url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
+    return get(url).json()
 
 
-def get_user_todos(user_id):
-    """Fetches user's to-do list from the JSONPlaceholder API."""
-    url = f"https://jsonplaceholder.typicode.com/todos?userId={user_id}"
-    return requests.get(url).json()
+def get_todo_list(employee_id):
+    """
+        Fetches the todo list of the employee from the given REST API.
+    """
+    url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
+    return get(url).json()
 
 
-def main():
-    """Main function to execute the script."""
-    user_id = sys.argv[1]
-
-    user_data = get_user_data(user_id)
-    username = user_data.get("name")
-
-    user_todos = get_user_todos(user_id)
-    total = len(user_todos)
-
+def display_todo_progress(employee_data, todo_list):
+    """
+        Displays the employee TODO list progress in the specified format.
+    """
+    employee_name = employee_data.get("name")
     completed_todos = []
-    for todo in user_todos:
+    for todo in todo_list:
         if todo.get('completed'):
             completed_todos.append(todo)
+    total = len(todo_list)
     completed = len(completed_todos)
 
-    print(f"Employee {username} is done with tasks ({completed}/{total})")
+    print(f"Employee {employee_name} is done with tasks({completed}/{total}):")
+
     for todo in completed_todos:
-        print(f"\t {todo['title']}")
+        print(f"     {todo['title']}")
 
 
 if __name__ == "__main__":
-    main()
+    employee_id = int(argv[1])
+
+    employee_data = get_employee_data(employee_id)
+    todo_list = get_todo_list(employee_id)
+
+    display_todo_progress(employee_data, todo_list)
