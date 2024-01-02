@@ -11,8 +11,8 @@ Usage:
     python3 0-gather_data_from_an_API.py <user_id>
 """
 
-import sys
 import requests
+import sys
 
 
 def get_user_data(user_id):
