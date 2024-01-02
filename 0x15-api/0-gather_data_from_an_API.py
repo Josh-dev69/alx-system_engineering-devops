@@ -11,29 +11,61 @@ Usage:
     python3 0-gather_data_from_an_API.py <user_id>
 """
 
-import requests as req
 import sys
+import requests
 
-user_id = sys.argv[1]
 
-url = "https://jsonplaceholder.typicode.com/users/{}"
-url2 = "https://jsonplaceholder.typicode.com/todos?userId={}"
+def get_user_data(user_id):
+    """Fetches user data from the JSONPlaceholder API.
 
-user_url = url.format(user_id)
-todo_url = url2.format(user_id)
+    Args:
+        user_id (int): The ID of the user.
 
-user_data = req.get(user_url).json()
-user = user_data.get("name")
+    Returns:
+        dict: User data in JSON format.
+    """
+    user_url = f"https://jsonplaceholder.typicode.com/users/{user_id}"
+    return requests.get(user_url).json()
 
-user_todos = req.get(todo_url).json()
-total = len(user_todos)
 
-completed_todos = []
-for todo in user_todos:
-    if todo['completed']:
-        completed_todos.append(todo)
-completed = len(completed_todos)
+def get_user_todos(user_id):
+    """Fetches user's to-do list from the JSONPlaceholder API.
 
-print(f"Employee {user} is done with tasks({completed}/{total}")
-for todo in completed_todos:
-    print("     {}".format(todo['title']))
+    Args:
+        user_id (int): The ID of the user.
+
+    Returns:
+        list: User's to-do list in JSON format.
+    """
+    todo_url = f"https://jsonplaceholder.typicode.com/todos?userId={user_id}"
+    return requests.get(todo_url).json()
+
+
+def main():
+    """ Main function to execute the script. """
+    if len(sys.argv) > 1:
+        user_id = sys.argv[1]
+
+    if not user_id:
+        print("Please provide a user ID as a command-line argument.")
+        sys.exit(1)
+
+    user_data = get_user_data(user_id)
+    username = user_data.get("name")
+
+    user_todos = get_user_todos(user_id)
+    total = len(user_todos)
+
+    completed_todos = []
+    for todo in user_todos:
+        if todo.get('completed'):
+            completed_todos.append(todo)
+    completed = len(completed_todos)
+
+    print(f"Employee {username} is done with tasks ({completed}/{total})")
+    for todo in completed_todos:
+        print(f"     {todo['title']}")
+
+
+if __name__ == "__main__":
+    main()
