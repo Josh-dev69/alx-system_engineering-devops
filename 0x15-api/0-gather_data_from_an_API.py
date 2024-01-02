@@ -42,7 +42,7 @@ def get_user_todos(user_id):
 
 
 def main():
-    """ Main function to execute the script. """
+    """Main function to execute the script."""
     if len(sys.argv) > 1:
         user_id = sys.argv[1]
 
