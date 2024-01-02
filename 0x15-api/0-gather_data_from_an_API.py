@@ -1,12 +1,9 @@
 #!/usr/bin/python3
 
 """
-Employee Task Summary Script
 
 This script retrieves information about a user and their
-completed tasks from the JSONPlaceholder API. It takes a user ID
-as a command-line argument, fetches the user's details, and
-prints a summary of completed tasks along with their titles.
+completed tasks from the JSONPlaceholder API.
 
 Usage:
     python3 0-gather_data_from_an_API.py <user_id>
@@ -17,29 +14,15 @@ import sys
 
 
 def get_user_data(user_id):
-    """Fetches user data from the JSONPlaceholder API.
-
-    Args:
-        user_id (int): The ID of the user.
-
-    Returns:
-        dict: User data in JSON format.
-    """
+    """Fetches user data from the JSONPlaceholder API."""
     user_url = f"https://jsonplaceholder.typicode.com/users/{user_id}"
     return requests.get(user_url).json()
 
 
 def get_user_todos(user_id):
-    """Fetches user's to-do list from the JSONPlaceholder API.
-
-    Args:
-        user_id (int): The ID of the user.
-
-    Returns:
-        list: User's to-do list in JSON format.
-    """
-    todo_url = f"https://jsonplaceholder.typicode.com/todos?userId={user_id}"
-    return requests.get(todo_url).json()
+    """Fetches user's to-do list from the JSONPlaceholder API."""
+    url = f"https://jsonplaceholder.typicode.com/todos?userId={user_id}"
+    return requests.get(url).json()
 
 
 def main():
