@@ -39,7 +39,7 @@ def main():
 
     print(f"Employee {username} is done with tasks ({completed}/{total}):")
     for todo in completed_todos:
-        print(f"\t {todo['title']}")
+        print('\t', todo['title'])
 
 
 if __name__ == "__main__":
