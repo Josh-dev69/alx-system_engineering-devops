@@ -25,30 +25,26 @@ def get_user_todos(user_id):
 def export_to_csv(user_id):
     """
     Exports user's completed tasks to a CSV file.
-
-    Args:
-        user_id (int): The ID of the user.
     """
     user_data = get_user_data(user_id)
-    username = user_data.get("name")
+    username = user_data.get("username")
 
     user_todos = get_user_todos(user_id)
     completed_todos = [todo for todo in user_todos if todo.get('completed')]
 
-    csv_filename = f"{user_id}.csv"
-
-    with open(csv_filename, mode='w', newline='') as csv_file:
-        csv_writer = csv.writer(csv_file)
+    filename = f'{user_id}.csv'
+    with open(filename, 'w', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_ALL)
 
         for todo in user_todos:
-            csv_writer.writerow([
+            writer.writerow([
                         user_id,
                         username,
                         str(todo['completed']),
                         todo['title']
                         ])
 
-    print(f"CSV data exported to {csv_filename}")
+    print(f"CSV data exported to {filename}")
 
 
 def main():
