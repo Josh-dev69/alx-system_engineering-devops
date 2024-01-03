@@ -2,12 +2,14 @@
 
 """
 This script retrieves information about a user and their completed
-tasks from the JSONPlaceholder API and exports the data in both CSV and JSON formats.
+tasks from the JSONPlaceholder API and exports the data in
+JSON formats.
 """
 
 import json
 import requests
 import sys
+
 
 def get_user_data(user_id):
     """
@@ -15,6 +17,7 @@ def get_user_data(user_id):
     """
     user_url = f"https://jsonplaceholder.typicode.com/users/{user_id}"
     return requests.get(user_url).json()
+
 
 def get_user_todos(user_id):
     """
