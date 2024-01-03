@@ -41,10 +41,15 @@ def export_to_csv(user_id):
         csv_writer = csv.writer(csv_file)
 
         for todo in user_todos:
-            csv_writer.writerow([user_id,username,str(todo['completed']),todo['title']])
+            csv_writer.writerow([
+                        user_id,
+                        username,
+                        str(todo['completed']),
+                        todo['title']
+                        ])
 
     print(f"CSV data exported to {csv_filename}")
-    
+
 
 def main():
     """Main function to execute the script."""
