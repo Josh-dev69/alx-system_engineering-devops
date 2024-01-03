@@ -36,10 +36,10 @@ def main():
 
     completed_todos = [todo for todo in user_todos if todo.get('completed')]
     completed = len(completed_todos)
-
+    
     print(f"Employee {username} is done with tasks ({completed}/{total}):")
     for todo in completed_todos:
-        print(f"\t{todo['title']}")
+        print(f"\t {todo['title']}")
 
 
 if __name__ == "__main__":
