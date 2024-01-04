@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# listening on port 80 of all the server’s active IPv4 IPs 
-sudo cp /etc/nginx/sites-enabled/default /etc/nginx/sites-enabled/default_backup
-sudo sed -i "s/8080/80/" /etc/nginx/sites-enabled/default
-sudo service nginx restart
+# Configure the server to enable Nginx on 80 port
+
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx start
