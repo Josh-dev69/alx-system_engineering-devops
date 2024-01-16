@@ -11,7 +11,7 @@ def number_of_subscribers(subreddit):
     Funtion that queries the Reddit API.
     """
     url = 'http://www.reddit.com/r/{}/about.json'.format(subreddit)
-    headers = {'User-Agent': 'CustomClient/1.0'}
+    headers = {'User-Agent': 'MyBot/1.0'}
     response = requests.get(url, headers=headers)
     if (not response.ok):
         return 0
