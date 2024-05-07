@@ -1,30 +1,22 @@
 #!/usr/bin/python3
-""" getting top 10 hot topic of a subreddits """
+"""Contains top_ten function"""
 import requests
 
 
 def top_ten(subreddit):
-    """ getting top 10 hot topic of a subreddits """
-    url = f'https://www.reddit.com/r/{subreddit}/hot.json?limit=10'
-    headers = {'User-Agent': 'your_user_agent'}
-
-    response = requests.get(url, headers=headers)
-
-    if response.status_code != 200:
-        print(None)
-        return
-
-    try:
-        data = response.json()
-    except ValueError:
+    """Print the titles of the 10 hottest posts on a given subreddit."""
+    url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
+    headers = {
+        "User-Agent": "0x16-api_advanced:project:\
+v1.0.0 (by /u/firdaus_cartoon_jr)"
+    }
+    params = {
+        "limit": 10
+    }
+    response = requests.get(url, headers=headers, params=params,
+                            allow_redirects=False)
+    if response.status_code == 404:
         print("None")
         return
-
-    if 'data' not in data or 'children' not in data['data']:
-        print("None")
-        return
-
-    posts = data['data']['children']
-
-    for post in posts:
-        print(post['data']['title'])
+    results = response.json().get("data")
+    [print(c.get("data").get("title")) for c in results.get("children")]
